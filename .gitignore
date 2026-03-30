@@ -1,0 +1,30 @@
+###> Symfony ###
+backend/.env.local
+backend/.env.local.php
+backend/.env.*.local
+backend/var/
+backend/public/bundles/
+###< Symfony ###
+
+###> PHP ###
+backend/vendor/
+###< PHP ###
+
+###> Next.js ###
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+###< Next.js ###
+
+###> lexik/jwt-authentication-bundle ###
+backend/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> phpunit/phpunit ###
+backend/phpunit.xml
+backend/.phpunit.cache/
+###< phpunit/phpunit ###
+
+###> Docker ###
+.env
+###< Docker ###
