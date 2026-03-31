@@ -27,4 +27,5 @@ backend/.phpunit.cache/
 
 ###> Docker ###
 /.env
+*.sql
 ###< Docker ###
