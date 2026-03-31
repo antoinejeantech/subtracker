@@ -63,3 +63,5 @@ networks:
 
 volumes:
   db_data:
+    external: true
+    name: subtracker_db_data
