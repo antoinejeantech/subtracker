@@ -76,8 +76,8 @@ db-reset: ## Drop, recreate and migrate the database
 init: ## First-time setup: build images, install deps, generate secrets, run migrations
 	$(DOCKER_COMP) up -d --wait
 	$(PHP_CONT) composer install
-	@printf 'APP_SECRET=%s\nDATABASE_URL="postgresql://app:app@db:5432/app?serverVersion=16&charset=utf8"\n' \
-		$$(openssl rand -hex 16) > backend/.env.local
+	@printf 'APP_SECRET=%s\nDATABASE_URL="postgresql://app:app@db:5432/app?serverVersion=16&charset=utf8"\nJWT_PASSPHRASE=%s\n' \
+		$$(openssl rand -hex 16) $$(openssl rand -hex 16) > backend/.env.local
 	$(PHP_CONT) php bin/console lexik:jwt:generate-keypair --skip-if-exists
 	$(PHP_CONT) php bin/console doctrine:migrations:migrate --no-interaction
 	@echo ''
