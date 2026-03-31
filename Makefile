@@ -73,15 +73,15 @@ db-reset: ## Drop, recreate and migrate the database
 
 # ——— Setup ———————————————————————————————————————————————————————————
 
-init: ## First-time setup: build, start all containers, create DB
+init: ## First-time setup: build images, install deps, generate secrets, run migrations
 	$(DOCKER_COMP) up -d --wait
-	@echo 'DATABASE_URL="postgresql://app:app@db:5432/app?serverVersion=16&charset=utf8"' > backend/.env.local
-	$(PHP_CONT) composer require symfony/orm-pack
-	$(PHP_CONT) composer require --dev symfony/maker-bundle
-	$(PHP_CONT) php bin/console doctrine:database:create --if-not-exists
-	@echo ""
-	@echo "Symfony playground is ready → http://localhost:8080"
-	@echo "Run 'make bash' to get a shell inside the PHP container."
+	$(PHP_CONT) composer install
+	@printf 'APP_SECRET=%s\nDATABASE_URL="postgresql://app:app@db:5432/app?serverVersion=16&charset=utf8"\n' \
+		$$(openssl rand -hex 16) > backend/.env.local
+	$(PHP_CONT) php bin/console lexik:jwt:generate-keypair --skip-if-exists
+	$(PHP_CONT) php bin/console doctrine:migrations:migrate --no-interaction
+	@echo ''
+	@echo 'Setup complete. API: http://localhost:8080  Frontend: http://localhost:3000'
 
 .PHONY: help build up down down-v restart logs logs-php logs-front front-bash npm \
         bash composer console cc db-create db-migrate db-diff db-reset init
