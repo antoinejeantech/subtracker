@@ -26,5 +26,5 @@ backend/.phpunit.cache/
 ###< phpunit/phpunit ###
 
 ###> Docker ###
-.env
+/.env
 ###< Docker ###
