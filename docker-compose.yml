@@ -1,3 +1,5 @@
+name: subtracker
+
 services:
   php:
     build:
